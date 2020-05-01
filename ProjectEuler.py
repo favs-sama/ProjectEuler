@@ -490,10 +490,121 @@ def amicable_numbers():
             sum_amicable_numbers = sum_amicable_numbers + key
             
     print(sum_amicable_numbers)
+    
+def IsAbundant(n):
+    if n == 1:
+        return False
+    i = 2 
+    total = 1
+    while (i < math.ceil(math.sqrt(n))):
+        if n % i == 0:
+            total = total + i + (n // i)
+        i = i + 1 
         
-                    
+    if i ** 2 == n:
+        total = total + i 
         
-amicable_numbers()
+    if total > n:
+        return True 
+    return False
+    
+    #sieve of eratosthenes to save prime numbers
+    primes = [True for i in range(10001)]
+    p = 2 
+    while p ** 2 <= 10000:
+        if primes[p] == True:
+            for i in range(p**2, 10001, p):
+                primes[i] = False
+        p = p + 1
+        
+def non_abundant_sums():
+    abundant_numbers = []
+    for i in range(12, 28124):
+        if IsAbundant(i):
+            abundant_numbers.append(i)
+            
+    two_abundant = [False for i in range(28124)]
+    
+    for i in range(len(abundant_numbers)):
+        for j in range(0, len(abundant_numbers), 1):
+            if abundant_numbers[i] + abundant_numbers[j] <= 28123:
+                two_abundant[abundant_numbers[i] + abundant_numbers[j]] = True 
+            
+    sums = 0     
+    for i in range(28124):
+        if not two_abundant[i]:
+            sums = sums + i 
+            
+    print(sums)
+    
+#compute for factoriadic number as this
+#indicates position of numbers in the nth
+#permutation (actually n -1th)
+def decimal_to_factoriadic(n):
+    i = 1 
+    result = ""
+    while n > 0:
+        result = str(n % i) + result
+        n = int(n / i)
+        i = i + 1
+        
+    return result
+    
+def lexicographic_permutations(place):
+    numbers = [i for i in range(10)]
+    factoriadic = decimal_to_factoriadic(place)
+    answer = ""
+    for i in factoriadic:
+        answer = answer + str(numbers[int(i)])
+        numbers.remove(numbers[int(i)])
+    return answer
+    
+#time and memory efficient fibonacci
+def nth_fibonacci_with_n_digits(n):
+    first = 1 
+    second = 1 
+    i = 2
+    while len(str(second)) < n:
+        first, second = second, first + second
+        i = i + 1 
+    return i
+
+#input copy pasted in console :3
+def names_scores():
+    names = input()
+    names_list = names.split(',')
+    
+    names_list_modified = []
+    for n in names_list:
+        names_list_modified.append(n.strip('"'))
+    
+    names_list_modified.sort()
+    
+    letters = {'A' : 1, 'B' : 2, 'C' : 3, 'D' : 4, 'E' : 5, 'F' : 6, 'G' : 7, 'H' : 8, 'I' : 9, 'J' : 10, 'K' : 11, 'L' : 12, 'M' : 13, 'N' : 14, 'O' : 15, 'P' : 16, 'Q' : 17, 'R' : 18, 'S' : 19, 'T' : 20, 'U' : 21, 'V' : 22, 'W' : 23, 'X' : 24, 'Y' : 25, 'Z' : 26 }
+    
+    score = 0;
+    for i in range(len(names_list_modified)):
+        local_sum = 0 
+        name = names_list_modified[i]
+        for j in name:
+            local_sum = local_sum + letters[j]
+        score = score + ((i + 1) * local_sum)
+    
+    #answer should be 871198282
+    print(score)
+        
+    
+names_scores()
+    
+
+
+        
+    
+
+
+
+
+
 
 
 
