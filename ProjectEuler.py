@@ -594,7 +594,7 @@ def names_scores():
     print(score)
         
     
-names_scores()
+print(nth_fibonacci_with_n_digits(1000))
     
 
 
